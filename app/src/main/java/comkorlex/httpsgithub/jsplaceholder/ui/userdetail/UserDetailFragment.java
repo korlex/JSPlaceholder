@@ -99,7 +99,7 @@ public class UserDetailFragment extends Fragment implements UserDetailContract.V
 
     @Override
     public void onListItemClick(int id) {
-        ((HomeActivity) getActivity()).addGalleryFrag(this, id);
+        ((HomeActivity) getActivity()).createAndAddGalleryFrag(this, id);
     }
 
     private int getUserId(){

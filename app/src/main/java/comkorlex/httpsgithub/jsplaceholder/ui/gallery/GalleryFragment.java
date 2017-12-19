@@ -9,11 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ViewSwitcher;
 
 import com.gturedi.views.StatefulLayout;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import javax.inject.Inject;
@@ -93,7 +90,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View, V
 
     @Override
     public void onItemClick(String url) {
-        ((HomeActivity) getActivity()).addPhotoFrag(this, url);
+        ((HomeActivity) getActivity()).createAndAddPhotoFrag(this, url);
     }
 
     private void setGrid(){

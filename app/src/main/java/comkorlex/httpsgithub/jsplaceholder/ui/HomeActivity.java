@@ -20,16 +20,14 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private FragmentManager fragmentManager;
-    private UsersFragment usersFragment;
-    private UserDetailFragment userDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
         initFragManager();
         if (savedInstanceState == null) {
-            addUsersFrag();
+            createAndAddUsersFrag();
         }
     }
 
@@ -38,46 +36,40 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void addUsersFrag(){
-        usersFragment = new UsersFragment();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.frag_container, usersFragment);
-        ft.commit();
+    private void createAndAddUsersFrag(){
+        UsersFragment usersFragment = new UsersFragment();
+        addFragment(null, usersFragment, false);
     }
 
-    public void addUserDetailFrag(Fragment fragment, int id){
+    public void createAndAddUserDetailFrag(Fragment fragment, int id){
         Bundle bundle = new Bundle();
         bundle.putInt(USER_ID, id);
-        userDetailFragment = new UserDetailFragment();
+        UserDetailFragment userDetailFragment = new UserDetailFragment();
         userDetailFragment.setArguments(bundle);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.hide(fragment);
-        ft.add(R.id.frag_container, userDetailFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        addFragment(fragment, userDetailFragment, true);
     }
 
-    public void addGalleryFrag(Fragment fragment, int id){
+    public void createAndAddGalleryFrag(Fragment fragment, int id){
         Bundle bundle = new Bundle();
         bundle.putInt(ALBUM_ID, id);
         GalleryFragment galleryFragment = new GalleryFragment();
         galleryFragment.setArguments(bundle);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.hide(fragment);
-        ft.add(R.id.frag_container, galleryFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        addFragment(fragment, galleryFragment, true);
     }
 
-    public void addPhotoFrag(Fragment fragment, String url){
+    public void createAndAddPhotoFrag(Fragment fragment, String url){
         Bundle bundle = new Bundle();
         bundle.putString(PHOTO_URL, url);
         PhotoFragment photoFragment = new PhotoFragment();
         photoFragment.setArguments(bundle);
+        addFragment(fragment, photoFragment, true);
+    }
+
+    private void addFragment(Fragment old, Fragment requested, boolean addToBackstack){
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.hide(fragment);
-        ft.add(R.id.frag_container, photoFragment);
-        ft.addToBackStack(null);
+        if (old != null)ft.hide(old);
+        ft.add(R.id.frag_container, requested);
+        if (addToBackstack)ft.addToBackStack(null);
         ft.commit();
     }
 

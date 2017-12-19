@@ -72,7 +72,7 @@ public class UsersFragment extends Fragment implements UsersContract.View, ListI
 
     @Override
     public void onListItemClick(int id) {
-        ((HomeActivity) getActivity()).addUserDetailFrag(this, id);
+        ((HomeActivity) getActivity()).createAndAddUserDetailFrag(this, id);
     }
 
 //    retry btn
